@@ -1,15 +1,19 @@
+# imports
 from flask import Flask, render_template, request, redirect, url_for, flash
 import sqlite3
 
+# chave e caminho para db
 app = Flask(__name__)
 app.secret_key = 'chave_super_secreta'
 DB_PATH = 'biblioteca.db'
 
+# conecção com db sqlite
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
+# métodos usados para interagir com a db
 @app.route('/', methods=['GET'])
 def index():
     conn = get_db_connection()
@@ -17,6 +21,7 @@ def index():
     conn.close()
     return render_template('index.html', livros=livros)
 
+# método adicionar com fallback e retorno se a ação foi feita corretamente
 @app.route('/adicionar', methods=['POST'])
 def adicionar():
     titulo = request.form.get('titulo', '').strip()
@@ -24,6 +29,7 @@ def adicionar():
     ano = request.form.get('ano_publicizacao', '').strip()
     disponivel = 1 if request.form.get('disponivel') == 'on' else 0
 
+# fallback caso falte informações 
     if not titulo or not autor:
         flash('Título e autor são obrigatórios!', 'danger')
         return redirect(url_for('index'))
@@ -45,6 +51,7 @@ def adicionar():
     flash('Livro adicionado com sucesso!', 'success')
     return redirect(url_for('index'))
 
+# método deletar com retorno se a ação foi feita corretamente
 @app.route('/deletar/<int:id>', methods=['POST'])
 def deletar(id):
     conn = get_db_connection()
