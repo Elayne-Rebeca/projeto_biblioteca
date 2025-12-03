@@ -1,5 +1,7 @@
+# import
 import sqlite3
 
+# definição de inicialização do db, ciração da table e retorno se foi criado.
 def init_db():
     conn = sqlite3.connect('biblioteca.db')
     cur = conn.cursor()
