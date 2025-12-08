@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Sistema de Biblioteca</title>
     <link rel="shortcut icon" href="/static/e-book.png" type="image/x-icon">
-<link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
-
     <h1 class="titulo-pagina">Biblioteca - Lista de Livros</h1>
-
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <ul>
@@ -20,7 +19,6 @@
     </ul>
     {% endif %}
     {% endwith %}
-
     <table class="info">
         <thead>
             <tr class="texto-titulo-tabela">
@@ -30,11 +28,11 @@
                 <th class="texto-conteudo-titulo">Ano</th>
                 <th class="texto-conteudo-titulo">Disponível</th>
                 <th class="texto-conteudo-titulo">Ações</th>
-            </tr>   
+            </tr>
         </thead>
         <tbody>
             {% for l in livros %}
-            <tr  class="conjunto">
+            <tr class="conjunto">
                 <td class="texto-conteudo">{{ l.id }}</td>
                 <td class="texto-conteudo">{{ l.titulo }}</td>
                 <td class="texto-conteudo">{{ l.autor }}</td>
@@ -49,16 +47,16 @@
             {% endfor %}
         </tbody>
     </table>
-
-    <h2>Adicionar Livro</h2>
-    <form class="livrins" action="{{ url_for('adicionar') }}" method="POST">
-        <label class="titulo-opcao">Título: <input class="caixa-texto" type="text" name="titulo" required></label>
-        <label class="titulo-opcao">Autor: <input class="caixa-texto" type="text" name="autor" required></label>
-        <label class="titulo-opcao">Ano: <input class="caixa-texto" type="number" name="ano_publicizacao"></label>
-        <label>Disponível: <input type="checkbox" name="disponivel" checked></label>
-        <button class="butaum2" type="submit">Salvar</button>
-    </form>
-
+    <h2 class="addLivro">Adicionar Livro</h2>
+    <div class="div-livrins">
+        <form class="livrins" action="{{ url_for('adicionar') }}" method="POST">
+            <label class="titulo-opcao">Título: <input class="caixa-texto" type="text" name="titulo" required></label>
+            <label class="titulo-opcao">Autor: <input class="caixa-texto" type="text" name="autor" required></label>
+            <label class="titulo-opcao">Ano: <input class="caixa-texto" type="number" name="ano_publicizacao"></label>
+            <label>Disponível: <input type="checkbox" name="disponivel" checked></label>
+            <button class="butaum2" type="submit">Salvar</button>
+        </form>
+    </div>
 </body>
 
 </html>

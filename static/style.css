@@ -1,6 +1,7 @@
 body {
     font-family: Arial;
     margin: 20px;
+    background-color: #f2e6f8;
 }
 
 table {
@@ -28,7 +29,7 @@ td {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
 }
 
 .conjunto {
@@ -60,6 +61,25 @@ td {
     color: #81091d;
 }
 
+.addLivro {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+.div-livrins {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    width: 25%;
+    margin: 0 auto;
+
+}
+
 .titulo-opcao {
     width: inherit;
 }
@@ -84,6 +104,7 @@ label {
 .livrins {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 40vh;
 }
 
@@ -98,9 +119,15 @@ label {
     border-radius: 20px;
     color: #510981;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.titulo-pagina{
+.butaum2:hover {
+    background-color: #8838bef1;
+    color: white;
+}
+
+.titulo-pagina {
     display: flex;
     justify-content: center;
     margin-bottom: 40px;

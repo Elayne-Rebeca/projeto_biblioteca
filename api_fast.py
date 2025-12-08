@@ -1,12 +1,16 @@
+# imports de requisitos
 from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
 from typing import Optional, List
 import sqlite3
 
+# caminho da db
 DB_PATH = 'biblioteca.db'
 
+# titulo api
 app = FastAPI(title="API Biblioteca")
 
+# variaveis/formulario dos livros
 class LivroIn(BaseModel):
     titulo: str
     autor: str
@@ -16,11 +20,13 @@ class LivroIn(BaseModel):
 class LivroOut(LivroIn):
     id: int
 
+# connecção com o DB a partir do caminho da DB
 def connect():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
+# conecta ao db executa select para listar todos os livros
 @app.get("/livros", response_model=List[LivroOut])
 def listar():
     conn = connect()
@@ -38,6 +44,7 @@ def listar():
         for row in query
     ]
 
+# conecta ao db, executa select apenas de um ID específico e depois desconecta
 @app.get("/livros/{id}", response_model=LivroOut)
 def obter(id: int):
     conn = connect()
@@ -55,6 +62,7 @@ def obter(id: int):
         "disponivel": bool(row["disponivel"])
     }
 
+# connecta ao db, insere um livro novo, commit e depois desconecta 
 @app.post("/livros", status_code=201, response_model=LivroOut)
 def criar(livro: LivroIn):
     conn = connect()
@@ -68,6 +76,8 @@ def criar(livro: LivroIn):
     conn.close()
 
     return {**livro.dict(), "id": novo_id}
+
+# conecta ao db e edita um livro pelo id, commit e depois desconecta
 
 @app.put("/livros/{id}", response_model=LivroOut)
 def atualizar(id: int, livro: LivroIn):
@@ -88,6 +98,7 @@ def atualizar(id: int, livro: LivroIn):
 
     return {**livro.dict(), "id": id}
 
+# conecta ao db, exclui um livro pelo id, commit e depois desconecta
 @app.delete("/livros/{id}")
 def deletar(id: int):
     conn = connect()
